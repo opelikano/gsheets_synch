@@ -1,6 +1,6 @@
 This project provides data copying from Google Sheets to mySQL. It is used framework Laravel.
 
-##Creating a project and providing access to the API.
+## Creating a project and providing access to the API.
 Creating a GoogleCloud Project:
 - Log in to the Google Cloud Console  https://console.cloud.google.com/welcome/
 - Create a new project or select an existing one where you'll be working.
@@ -24,7 +24,7 @@ GOOGLE_CREDENTIAL_FILE=config\credentials.json
 Also you can view next video:
 https://www.youtube.com/watch?v=y-sIJ30Z5CU
 
-##Settings in gImport.php 
+## Settings in gImport.php 
 Setting up import reconciliation with Google Sheets in mySQL.
 It must be described in the config/gImport.php file.
 Let's consider an example. (you can see this example in config/gImport_example.php)
