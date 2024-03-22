@@ -86,7 +86,7 @@ Before that, You need to add the corresponding column in gImport.php and run php
 
 ## Faker
 For testing, you can fill your Google Sheets file with fake data. To do this, it is necessary to describe the name of the columns and therefore their values in a separate file.
-You can see an example of such a file in app\Fakers\FakerExample.php. The class must be an implementation of the Google Sheets interface.
+You can see an example of such a file in app\Fakers\FakerExample.php. The class must be an implementation of the GoogleSheetFaker interface.
 Required number of rows - set in method needRowsAmount().
 
 ```
