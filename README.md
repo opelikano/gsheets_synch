@@ -92,5 +92,6 @@ Required number of rows - set in method needRowsAmount().
 ```
 php artisan app:run-faker {pageUrl} {fakerClass}
 ```
-- pageUrl - сторінка з таблицею для заповнення, наприклад, https://docs.google.com/spreadsheets/d/1UGWw4ZI58vEnuovHgqGfTvQ_PGQ0sF6z-t4ghZkVZ4c/edit#gid=1814184294
-- fakerClass - ім"я класу з фейкером, наприклад, FakerExample.
+- pageUrl - 
+page with a table to fill in, e.g. https://docs.google.com/spreadsheets/d/1UGWw4ZI58vEnuovHgqGfTvQ_PGQ0sF6z-t4ghZkVZ4c/edit#gid=1814184294
+- fakerClass - class name with faker, e.g. FakerExample.
