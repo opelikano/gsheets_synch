@@ -67,8 +67,8 @@ If it becomes necessary to change the structure, You will need to modify the fil
 php artisan app:synch-data {pageUrl=all} {rows=all}
 ```
 It is for transferring data from Google Sheets in accordance with gImport.
-pageUrl - link on Google Sheets page or all, default: all (it is mean all files are listed in gImport)
-rows - range of rows when pageUrl is not all, default: all.
+- pageUrl - link on Google Sheets page or all, default: all (it is mean all files are listed in gImport)
+- rows - range of rows when pageUrl is not all, default: all.
 
 You can specify next parameters for rows range:
 - all - for import all rows in specified document
