@@ -22,14 +22,14 @@ Save file credentials.json (e.g., in directory config/) and write in .env
 GOOGLE_CREDENTIAL_FILE=config\credentials.json
 
 Also you can view 
-<a target="_blank" href="https://www.youtube.com/watch?v=y-sIJ30Z5CU">this video</a>.
+<a href="https://www.youtube.com/watch?v=y-sIJ30Z5CU">this video</a>.
 
 ## Settings in gImport.php 
 Setting up import reconciliation with Google Sheets in mySQL.
 It must be described in the config/gImport.php file.
 Let's consider an example. (you can see this example in config/gImport_example.php)
 
-- file_id - file name. It is part of url, e.g. for:
+- file_id - It is part of url, e.g. for:
 			https://docs.google.com/spreadsheets/d/1UGWw4ZI58vEnuovHgqGfTvQ_PGQ0sF6z-t4ghZkVZ4c/edit#gid=1814184294
 			file id: 1UGWw4ZI58vEnuovHgqGfTvQ_PGQ0sF6z-t4ghZkVZ4c
 - sheet - sheet name (tab in file) 
