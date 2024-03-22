@@ -21,8 +21,8 @@ Grant access to the Google Sheets file to the created user.
 Save file credentials.json (e.g., in directory config/) and write in .env
 GOOGLE_CREDENTIAL_FILE=config\credentials.json
 
-Also you can view next video:
-https://www.youtube.com/watch?v=y-sIJ30Z5CU
+Also you can view 
+<a target="_blank" href="https://www.youtube.com/watch?v=y-sIJ30Z5CU">this video</a>.
 
 ## Settings in gImport.php 
 Setting up import reconciliation with Google Sheets in mySQL.
