@@ -10,12 +10,18 @@ class FakerService
     protected $googleSheetsService;
     const BATCH_SIZE = 60;
 
-    public function __construct()
+    public function __construct(GoogleSheetsService $googleSheetsService)
     {
-        $this->googleSheetsService = new GoogleSheetsService();
+        $this->googleSheetsService = $googleSheetsService;
     }
 
-    public function runFaker(string $pageUrl, string $fakerClassName)
+    /**
+     * @param string $pageUrl
+     * @param string $fakerClassName
+     * @return void
+     * @throws Exception
+     */
+    public function runFaker(string $pageUrl, string $fakerClassName): void
     {
         $fakerClass = app()->make('App\\Fakers\\' . $fakerClassName);
         if (!($fakerClass instanceof GoogleSheetFaker)) {

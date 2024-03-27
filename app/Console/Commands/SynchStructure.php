@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Http\Controllers\SynchStructureController;
+use App\Services\SynchStructureService;
 
 class SynchStructure extends Command
 {
@@ -26,6 +26,6 @@ class SynchStructure extends Command
      */
     public function handle()
     {
-        (new SynchStructureController())->index();
+        (new SynchStructureService())->synchronize();
     }
 }

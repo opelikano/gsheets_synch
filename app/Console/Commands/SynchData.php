@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Http\Controllers\SynchDataController;
 use App\Services\SynchDataService;
+use App\Services\GoogleSheetsService;
 
 class SynchData extends Command
 {
@@ -29,6 +29,7 @@ class SynchData extends Command
      */
     public function handle()
     {
+        $pageUrl = $this->argument('pageUrl');
         $rows = $this->argument('rows');
         if (!preg_match('/^(all|\d+(?:-\d*)?)$/', $rows)) {
             $err = 'You can specify next parameters for rows range:.' . PHP_EOL;
@@ -40,7 +41,6 @@ class SynchData extends Command
             return;
         }
 
-        (new SynchDataController(new SynchDataService()))
-            ->index($this->argument('pageUrl'), $rows);
+        (new SynchDataService(new GoogleSheetsService()))->synchData($pageUrl, $rows);
     }
 }

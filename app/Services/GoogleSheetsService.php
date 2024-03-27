@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
-use Google_Client;
-use Google_Service_Sheets;
-use Google_Service_Sheets_ValueRange;
+use Google\Client;
+use Google\Service\Sheets;
+use Google\Service\Sheets\SheetProperties;
+use Google\Service\Sheets\ValueRange;
+use Exception;
 
 class GoogleSheetsService
 {
@@ -13,21 +15,22 @@ class GoogleSheetsService
 
     public function __construct()
     {
-        $this->client = new Google_Client();
+        $this->client = new Client();
         $this->client->setApplicationName(config('app.name'));
-        $this->client->setScopes(Google_Service_Sheets::SPREADSHEETS);
-//        $this->client->setScopes(Google_Service_Sheets::SPREADSHEETS_READONLY);
+        $this->client->setScopes(Sheets::SPREADSHEETS);
+//        $this->client->setScopes(Sheets::SPREADSHEETS_READONLY);
         $this->client->setAuthConfig(env('GOOGLE_CREDENTIAL_FILE'));
         $this->client->setAccessType('offline');
-        $this->service = new Google_Service_Sheets($this->client);
+        $this->service = new Sheets($this->client);
     }
 
-    public function getSheets(string $spreadsheetId) {
+    public function getSheets(string $spreadsheetId)
+    {
         $response = $this->service->spreadsheets->get($spreadsheetId);
         return $response->getSheets();
     }
 
-    public function getData(string $spreadsheetId, string $range)
+    public function getData(string $spreadsheetId, string $range): array
     {
         $response = $this->service->spreadsheets_values->get($spreadsheetId, $range);
         return $response->getValues();
@@ -41,7 +44,7 @@ class GoogleSheetsService
         return [$fileId[1], $sheetId[1]];
     }
 
-    public function update($spreadsheetId, $range, $requestBody)
+    public function update(string $spreadsheetId, string $range, $requestBody)
     {
         $response = $this->service->spreadsheets_values->update($spreadsheetId, $range,
             $requestBody, ['valueInputOption' => 'RAW']
@@ -49,19 +52,24 @@ class GoogleSheetsService
         return $response;
     }
 
-    public function append($spreadsheetId, $range, $data)
+    public function append(string $spreadsheetId, string $range, array $data)
     {
-        $requestBody = new Google_Service_Sheets_ValueRange(['values' => $data]);
-        $response = $this->service->spreadsheets_values->append(
+        $requestBody = new ValueRange(['values' => $data]);
+        return $this->service->spreadsheets_values->append(
             $spreadsheetId,
             $range,
             $requestBody,
             ['valueInputOption' => 'RAW']
         );
-        return $response;
     }
 
-    public function getSheetById(string $fileId, string $sheetId)
+    /**
+     * @param string $fileId
+     * @param string $sheetId
+     * @return SheetProperties
+     * @throws Exception
+     */
+    public function getSheetById(string $fileId, string $sheetId): SheetProperties
     {
         $sheets = $this->getSheets($fileId);
         foreach ($sheets as $sheet) {

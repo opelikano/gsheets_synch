@@ -19,16 +19,15 @@ class SynchDataService
 
     public const BATCH_SIZE = 50;
 
-    public function __construct()
+    public function __construct(GoogleSheetsService $googleSheetsService)
     {
-        $this->googleSheetsService = new GoogleSheetsService();
+        $this->googleSheetsService = $googleSheetsService;
     }
 
     private function modeDefinition(string $rows): string
     {
         if ($rows == self::ROWS_ALL) return self::MODE_ALL;
         if (!str_contains($rows, '-')) return self::MODE_SINGLE;
-//        if (str_contains($rows, '-')) {
         else {
             $arr = explode('-', $rows);
             if ($arr[1] != false) return self::MODE_RANGE;
@@ -36,7 +35,7 @@ class SynchDataService
         }
     }
 
-    private function rowsDefinition($mode, $rows): array
+    private function rowsDefinition(string $mode, string $rows): array
     {
         if ($mode == self::MODE_RANGE) {
             return explode('-', $rows);
@@ -47,7 +46,7 @@ class SynchDataService
         else return [explode('-', $rows)[0] , false];
     }
 
-    public function synchColumn(string $pageUrl, string $column)
+    public function synchColumn(string $pageUrl, string $column): void
     {
         $sheetConfig = $this->getSheetConfig($pageUrl)[0];
         $header = $this->getHeader($sheetConfig);
@@ -89,7 +88,7 @@ class SynchDataService
         }
     }
 
-    public function synchData(string $pageUrl, string $rows)
+    public function synchData(string $pageUrl, string $rows): void
     {
         $sheetsParams = ($pageUrl == self::PAGE_ALL) ? config('gImport') : $this->getSheetConfig($pageUrl);
         $mode = $this->modeDefinition($rows);
@@ -137,7 +136,7 @@ class SynchDataService
         }
     }
 
-    private function getSheetConfig(string $pageUrl)
+    private function getSheetConfig(string $pageUrl): mixed
     {
         list($fileId, $sheetId) = $this->googleSheetsService->parsePageParam($pageUrl);
         $sheetName = $this->googleSheetsService->getSheetById($fileId, $sheetId)->title;
@@ -156,7 +155,7 @@ class SynchDataService
         return $this->googleSheetsService->getData($sheet['file_id'], $range)[0];
     }
 
-    public function saveData(array $preparedData)
+    public function saveData(array $preparedData): void
     {
         foreach ($preparedData as $sqlTableName => $columns) {
             $ids = array_column($columns, 'id');
@@ -184,7 +183,7 @@ class SynchDataService
         array $header,
         int $startRow,
         int $endRow
-    )
+    ): array
     {
         $rowNumbers = range($startRow, $endRow);
         $preparedData = [];

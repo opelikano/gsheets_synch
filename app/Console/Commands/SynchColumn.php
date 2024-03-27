@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Http\Controllers\SynchDataController;
 use App\Services\SynchDataService;
+use App\Services\GoogleSheetsService;
 
 class SynchColumn extends Command
 {
@@ -29,7 +29,9 @@ class SynchColumn extends Command
      */
     public function handle()
     {
-        (new SynchDataController(new SynchDataService()))
-            ->synchColumn($this->argument('pageUrl'), $this->argument('column'));
+        (new SynchDataService(new GoogleSheetsService()))->synchColumn(
+            $this->argument('pageUrl'),
+            $this->argument('column'),
+        );
     }
 }

@@ -3,7 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Http\Controllers\SynchDataController;
+use App\Services\FakerService;
+use App\Services\GoogleSheetsService;
 
 class RunFaker extends Command
 {
@@ -26,7 +27,9 @@ class RunFaker extends Command
      */
     public function handle()
     {
-        (new SynchDataController())
-            ->runFaker($this->argument('pageUrl'), $fakerClass = $this->argument('fakerClass'));
+        $pageUrl = $this->argument('pageUrl');
+        $fakerClass = $this->argument('fakerClass');
+
+        (new FakerService(new GoogleSheetsService()))->runFaker($pageUrl, $fakerClass);
     }
 }
